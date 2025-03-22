@@ -1,14 +1,19 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Quiz from "@/components/quiz";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
+      <Quiz></Quiz>
+      {/* <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
           <code className={styles.code}>app/page.js</code>
         </p>
+        <div>
+          <h2>Purely You</h2>
+        </div>
         <div>
           <a
             href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
@@ -37,7 +42,7 @@ export default function Home() {
           height={37}
           priority
         />
-      </div>
+      </div> */}
 
       <div className={styles.grid}>
         <a
