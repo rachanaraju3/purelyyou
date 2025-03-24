@@ -1,10 +1,33 @@
 .main {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
+  justify-content:space-between;
+  /* align-items: flex-start; */
+  margin: 5px;
+  /* padding: 6rem; */
   min-height: 100vh;
+  /* max-height: 100vh; */
+}
+/* 
+.rec{
+  align-self: flex-start;
+  max-height: 70vh;
+} */
+
+/* .chatbot{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  flex-direction: flex-end;
+  position: relative;
+  margin: 0em;
+  align-items: inherit;
+  width: 50%;
+  max-height: 20vh;
+} */
+
+.chatbot:focus{
+  height: 4em;
 }
 
 .description {

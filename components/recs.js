@@ -44,7 +44,7 @@ export default function Recs( props ){
     }
 
     return (
-        <main className={styles.main}>
+        <div className={styles.mains}>
             <h1>Your Recommendations</h1>
     
             <div className={styles.recs}>
@@ -68,6 +68,6 @@ export default function Recs( props ){
                     <div className={styles.recText}>{creamFeatures}</div>
                 </div>
             </div>
-        </main>
+        </div>
     )
 }

@@ -1,11 +1,31 @@
+"use client"
 import Image from "next/image";
 import styles from "./page.module.css";
 import Quiz from "@/components/quiz";
 import Recs from "@/components/recs";
+import Chatbot from "@/components/chatbot";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 export default function Home() {
   return (
-    <Recs cleanser={{Product: "HI", Features: ["dkflajfla"]}} toner={{Product: "YO", Features: ["dkflajfla, water based"]}} cream={{Product: "SUP", Features: ["moisturizing"]}}></Recs>
+    <div>
+      {/* <Router>
+        <Routes>
+          <Route path="/recs" element={<Recs className={styles.rec} cleanser={{Product: "HI", Features: ["dkflajfla"]}} toner={{Product: "YO", Features: ["dkflajfla, water based"]}} cream={{Product: "SUP", Features: ["moisturizing"]}}></Recs>}/>
+        </Routes>
+      </Router> */}
+      <main className={styles.main}>
+      <Quiz></Quiz>
+      <Chatbot className={styles.chatbot}></Chatbot>
+    </main>
+    </div>
+    
+    
     // <main className={styles.main}>
     //   <Recs></Recs>
     //   {/* <Quiz></Quiz> */}
