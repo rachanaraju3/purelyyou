@@ -21,6 +21,7 @@ def read_skincare_data(file_path, category):
                 
                 feature_list = feature_list.strip('[]')
                 feature_list = feature_list.replace("'", "").split(', ')
+                feature_list = list(set(feature_list))
                 
                 products.append(product)
                 features.append(feature_list)
