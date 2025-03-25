@@ -16,6 +16,28 @@ export default function Quiz(){
     const [paraben, setParaben] = useState("paraben");
     const [allergies, setAllergies] = useState("no allergies");
 
+    const topToner = null
+    const topCleanser = null;
+    const topCream = null;
+
+    const submitForm = () => {
+        const url = `/api/form`;
+        fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ skinType, weather, skinGoals, sensitivity, acne, uv, paraben, allergies }),
+        })
+        .then((r) => r.json())
+        .then((data) => console.log(data));
+
+        topToner = data["toner"];
+        topCleanser = data["cleanser"];
+        topCream = data["cream"];
+
+    }
+
     // use use state to set values for cleanser toner and cream
     // use useeffect on those as well
     // on submit button click call a function to generate the top cleanser toner and cream and set them
@@ -108,7 +130,7 @@ export default function Quiz(){
                                 <FormControlLabel value="no allergies" control={<Radio />} label="No" checked={allergies === "no allergies"} onChange={(e)=>{setAllergies(e.target.value)}}/>
                             </RadioGroup>
 
-                        <Button type='submit' >Submit</Button>
+                        <Button type='submit' onClick={submitForm}>Submit</Button>
                     </FormControl>
                 </div>
             </div>
