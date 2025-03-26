@@ -7,34 +7,93 @@ import { Routes, useHistory, useNavigate } from 'react-router-dom';
 
 export default function Quiz(){
     
-    const [skinType,setSkinType] = useState("normal");
-    const [weather,setWeather] = useState("moderate");
-    const [skinGoals,setSkinGoals] = useState([]);
-    const [sensitivity, setSensitivity] = useState("don't know");
-    const [acne, setAcne] = useState("mild");
-    const [uv, setUv] = useState("no protection");
-    const [paraben, setParaben] = useState("paraben");
-    const [allergies, setAllergies] = useState("no allergies");
+    const [skinType,setSkinType] = useState(null);
+    const [weather,setWeather] = useState(null);
+    const [sensitivity, setSensitivity] = useState(null);
+    const [acne, setAcne] = useState(null);
+    const [uv, setUv] = useState(null);
+    const [paraben, setParaben] = useState(null);
+    const [allergies, setAllergies] = useState(null);
 
-    const topToner = null
-    const topCleanser = null;
-    const topCream = null;
+    let skinGoals = []; 
+
+    const [checked,setChecked] = useState({
+        skinGoals1:false,
+        skinGoals2:false,
+        skinGoals3:false,
+        skinGoals4:false
+    });
+
+    const handleChange = (event) => {
+        setChecked({
+          ...checked,
+          [event.target.name]: event.target.checked,
+        });
+      };
+
+    const loadSkinGoals = () => {
+        for (let i=1; i<5;i++){
+            console.log(i);
+            console.log(checked[`skinGoals${i}`]);
+            if (checked[`skinGoals${i}`]){
+                console.log(document.getElementById(`skinGoals${i}`));
+                console.log(document.getElementById(`skinGoals${i}`).querySelector('span').querySelector('input').value);
+                const newFeat = document.getElementById(`skinGoals${i}`).querySelector('span').querySelector('input').value;
+                console.log(newFeat);
+                console.log(skinGoals);
+                skinGoals.push(newFeat);
+                console.log(skinGoals);
+            }
+        }
+    }
+
+
+    let topToner = null
+    let topCleanser = null;
+    let topCream = null;
+
+    // const checkGoals = () =>
 
     const submitForm = () => {
+        console.log(checked);
+        loadSkinGoals();
+        console.log({
+            "skinType":skinType, 
+            "weather": weather, 
+            "skinGoals": skinGoals, 
+            "sensitivity": sensitivity, 
+            "acne": acne, 
+            "uv": uv, 
+            "paraben": paraben, 
+            "allergies": allergies 
+        });
         const url = `/api/form`;
-        fetch(url, {
+        const result = fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ skinType, weather, skinGoals, sensitivity, acne, uv, paraben, allergies }),
+        body: JSON.stringify({
+            "skinType":skinType, 
+            "weather": weather, 
+            "skinGoals": skinGoals, 
+            "sensitivity": sensitivity, 
+            "acne": acne, 
+            "uv": uv, 
+            "paraben": paraben, 
+            "allergies": allergies 
+        }),
         })
-        .then((r) => r.json())
-        .then((data) => console.log(data));
+        console.log(result);
+        // .then((r) => r.json())
+        // .then((data) => console.log(data));
 
-        topToner = data["toner"];
-        topCleanser = data["cleanser"];
-        topCream = data["cream"];
+        // if (data!== null){
+        //     topToner = data["toner"];
+        //     topCleanser = data["cleanser"];
+        //     topCream = data["cream"];
+        // }
+        
 
     }
 
@@ -68,7 +127,7 @@ export default function Quiz(){
                         <FormLabel>What is your weather like?</FormLabel>
                             <RadioGroup
                                 aria-labelledby="demo-radio-buttons-group-label"
-                                name="weather"
+                                // name="weather"
                             >
                                 <FormControlLabel value="dry" control={<Radio />} label="Dry" checked={weather === "dry"} onChange={(e)=>{setWeather(e.target.value)}}/>
                                 <FormControlLabel value="humid" control={<Radio />} label="Humid" checked={weather === "humid"} onChange={(e)=>{setWeather(e.target.value)}}/>
@@ -76,11 +135,11 @@ export default function Quiz(){
                             </RadioGroup>
 
                         <FormLabel>What are your skincare goals?</FormLabel>
-                        
-                            <FormControlLabel value="Acne-Fighting" control={<Checkbox />} name="skin-goals" label="Clear acne" checked={skinGoals === "Acne-Fighting"} onChange={(e)=>{setSkinGoals([...skinGoals,e.target.value])}}/>
-                            <FormControlLabel value="Brightening" control={<Checkbox />} name="skin-goals" label="Treat dark spots" checked={skinGoals === "Brightening"} onChange={(e)=>{setSkinGoals([...skinGoals,e.target.value])}}/>
-                            <FormControlLabel value="Anti-Aging" control={<Checkbox />} name="skin-goals" label="Sking firmness is a concern" checked={skinGoals === "Anti-Aging"} onChange={(e)=>{setSkinGoals([...skinGoals,e.target.value])}}/>
-                            <FormControlLabel value="Promotes Wound Healing" control={<Checkbox />} name="skin-goals" label="Even skin texture" checked={skinGoals === "Promotes Wound Healing"} onChange={(e)=>{setSkinGoals([...skinGoals,e.target.value])}}/>
+                            {/* <Checkbox value="Acne-Fighting" name="skinGoals1" label="Clear acne" checked={skinGoals === "Acne-Fighting"} onChange={handleChange}/> */}
+                            <FormControlLabel value="Acne-Fighting" control={<Checkbox />} name="skinGoals1" id = "skinGoals1" label="Clear acne" onChange={handleChange}/>
+                            <FormControlLabel value="Brightening" control={<Checkbox />} name="skinGoals2" id = "skinGoals2" label="Treat dark spots" onChange={handleChange}/>
+                            <FormControlLabel value="Anti-Aging" control={<Checkbox />} name="skinGoals3" id = "skinGoals3" label="Sking firmness is a concern"  onChange={handleChange}/>
+                            <FormControlLabel value="Promotes Wound Healing" control={<Checkbox />} name="skinGoals4" id = "skinGoals4" label="Even skin texture" onChange={handleChange}/>
 
                         <FormLabel>What is your skin sensitivity?</FormLabel>
                             <RadioGroup
