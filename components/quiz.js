@@ -138,7 +138,7 @@ export default function Quiz(){
                             {/* <Checkbox value="Acne-Fighting" name="skinGoals1" label="Clear acne" checked={skinGoals === "Acne-Fighting"} onChange={handleChange}/> */}
                             <FormControlLabel value="Acne-Fighting" control={<Checkbox />} name="skinGoals1" id = "skinGoals1" label="Clear acne" onChange={handleChange}/>
                             <FormControlLabel value="Brightening" control={<Checkbox />} name="skinGoals2" id = "skinGoals2" label="Treat dark spots" onChange={handleChange}/>
-                            <FormControlLabel value="Anti-Aging" control={<Checkbox />} name="skinGoals3" id = "skinGoals3" label="Sking firmness is a concern"  onChange={handleChange}/>
+                            <FormControlLabel value="Anti-Aging" control={<Checkbox />} name="skinGoals3" id = "skinGoals3" label="Skin firmness is a concern"  onChange={handleChange}/>
                             <FormControlLabel value="Promotes Wound Healing" control={<Checkbox />} name="skinGoals4" id = "skinGoals4" label="Even skin texture" onChange={handleChange}/>
 
                         <FormLabel>What is your skin sensitivity?</FormLabel>
