@@ -2,8 +2,11 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 full_df = pd.read_csv('skincare_products.csv')
 
@@ -57,15 +60,21 @@ def add_filters(skin_type, weather, skin_goals, sensitivity, acne, uv, paraben, 
     
     return include, exclude
 
+def includes_feature(lst,features):
+    for feat in features:
+        if feat in lst:
+            return True
+    return False
+
 def filter_by_feature(df, feature):
-    return df[df['Features'].apply(lambda x: feature in x)]
+    return df[df['Features'].apply(lambda x: includes_feature(x,feature))]
 
 def filter_out_features(df, features_to_exclude):
     return df[df['Features'].apply(lambda x: not any(feature in x for feature in features_to_exclude))]
 
 def recommendation(answers, df):
     tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform(df["features"])
+    tfidf_matrix = tfidf_vectorizer.fit_transform(df["Features"])
 
     user_vector = tfidf_vectorizer.transform(" ".join(answers))
 
@@ -78,8 +87,11 @@ def recommendation(answers, df):
     return recommendation.iloc[0].to_dict()
 
 def filter_dfs(include, exclude, skin_goals):
+    
     filter_out_clean = filter_out_features(cleanser_df, exclude)
+    print(filter_out_clean)
     cleanser_filtered = filter_by_feature(filter_out_clean, include)
+    print(cleanser_filtered)
 
     filter_out_toner = filter_out_features(toner_df, exclude)
     toner_filtered = filter_by_feature(filter_out_toner, include)
@@ -89,6 +101,11 @@ def filter_dfs(include, exclude, skin_goals):
 
     filter_out_cream = filter_out_features(moist_df, exclude)
     moist_filtered = filter_by_feature(filter_out_cream, include)
+
+    print("cleanser_filtered:",cleanser_filtered)
+    print("toner_filtered:",toner_filtered)
+    print("serum_filtered:",serum_filtered)
+    print("moist_filtered:",moist_filtered)
 
     if len(skin_goals) > 2:
         include.extend(skin_goals[2:])
@@ -108,8 +125,11 @@ def filter_dfs(include, exclude, skin_goals):
 
 @app.route('/get_recommendations', methods=['POST'])
 def get_recommendations():
+    print("hello")
     if request.method == 'POST':
+        print("hi")
         data = request.json  # Receive JSON data from React
+        print(data)
         skin_type = data.get('skinType')
         weather = data.get('weather')
         skin_goals = data.get('skinGoals')
@@ -121,12 +141,13 @@ def get_recommendations():
         
         include, exclude = add_filters(skin_type, weather, skin_goals, sensitivity, acne, uv, paraben, allergies)
 
-        recs = filter_dfs(skin_goals, include=include, exclude=exclude, skin_goals=skin_goals)
+        recs = filter_dfs(include=include, exclude=exclude, skin_goals=skin_goals)
+        print(recs)
 
         return jsonify(recs)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="127.0.0.1", port=8000, debug=True)
 
         
 

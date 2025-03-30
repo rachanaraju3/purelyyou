@@ -67,7 +67,8 @@ export default function Quiz(){
             "paraben": paraben, 
             "allergies": allergies 
         });
-        const url = `/api/form`;
+        const url = 'http://127.0.0.1:8000/get_recommendations';
+        console.log(url);
         const result = fetch(url, {
         method: "POST",
         headers: {
@@ -84,15 +85,19 @@ export default function Quiz(){
             "allergies": allergies 
         }),
         })
-        console.log(result);
-        // .then((r) => r.json())
-        // .then((data) => console.log(data));
+        .then((r) => r.json())
+        .then((data) => console.log(data))
+        .catch(error=>console.error("Error: ", error));
+
+        console.log(result)
 
         // if (data!== null){
         //     topToner = data["toner"];
         //     topCleanser = data["cleanser"];
         //     topCream = data["cream"];
         // }
+
+        // console.log(result);
         
 
     }
