@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './quiz.module.css';
 import { Button, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Checkbox } from '@mui/material';
 import Recs from './recs';
 import { useState } from 'react';
-import { Routes, useHistory, useNavigate } from 'react-router-dom';
+import { Form, Routes, useHistory, useNavigate } from 'react-router-dom';
 
 export default function Quiz(){
     
@@ -15,7 +15,25 @@ export default function Quiz(){
     const [paraben, setParaben] = useState(null);
     const [allergies, setAllergies] = useState(null);
 
+
+    const [tonerName,setTonerName] = useState("Submit Form");
+    const [cleanserName, setCleanserName] = useState("Submit Form");
+    const [creamName, setCreamName] = useState("Submit Form");
+
+    const [topToner,setTopToner] = useState("Submit Form");
+    const [topCleanser, setTopCleanser] = useState("Submit Form");
+    const [topCream, setTopCream] = useState("Submit Form");
+
     let skinGoals = []; 
+
+
+    useEffect(()=>{
+        setTonerName(topToner);
+        setCleanserName(topCleanser);
+        setCreamName(topCream);
+        console.log("items changed");
+    }, [topToner,topCleanser,topCream])
+
 
     const [checked,setChecked] = useState({
         skinGoals1:false,
@@ -48,13 +66,12 @@ export default function Quiz(){
     }
 
 
-    let topToner = null
-    let topCleanser = null;
-    let topCream = null;
+
 
     // const checkGoals = () =>
 
-    const submitForm = () => {
+    async function submitForm (e) {
+        e.preventDefault();
         console.log(checked);
         loadSkinGoals();
         console.log({
@@ -69,7 +86,7 @@ export default function Quiz(){
         });
         const url = 'http://127.0.0.1:8000/get_recommendations';
         console.log(url);
-        const result = fetch(url, {
+        const result = await fetch(url, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -85,27 +102,22 @@ export default function Quiz(){
             "allergies": allergies 
         }),
         })
-        .then((r) => r.json())
-        .then((data) => console.log(data))
+        .then((r) => r.json()).then((data) => {setTopToner(data["toner"]);
+            setTopCleanser(data["cleanser"]);
+            setTopCream(data["moisturizer"]);})
         .catch(error=>console.error("Error: ", error));
 
-        console.log(result)
-
-        // if (data!== null){
-        //     topToner = data["toner"];
-        //     topCleanser = data["cleanser"];
-        //     topCream = data["cream"];
-        // }
-
-        // console.log(result);
+        console.log(topToner,topCleanser,topCream);
         
 
     }
 
+    console.log(cleanserName,tonerName,creamName);
     // use use state to set values for cleanser toner and cream
     // use useeffect on those as well
     // on submit button click call a function to generate the top cleanser toner and cream and set them
     // use effect should then run and repopulate Recs
+
 
     return(
         <main className={styles.mains}>
@@ -194,11 +206,11 @@ export default function Quiz(){
                                 <FormControlLabel value="no allergies" control={<Radio />} label="No" checked={allergies === "no allergies"} onChange={(e)=>{setAllergies(e.target.value)}}/>
                             </RadioGroup>
 
-                        <Button type='submit' onClick={submitForm}>Submit</Button>
+                        <Button type='button' onClick={submitForm}>Submit</Button>
                     </FormControl>
                 </div>
             </div>
-            <Recs className={styles.rec} cleanser={{Product: "HI", Features: ["dkflajfla"]}} toner={{Product: "YO", Features: ["dkflajfla, water based"]}} cream={{Product: "SUP", Features: ["moisturizing"]}}></Recs>
+            <Recs className={styles.rec} cleanser={{Product: cleanserName}} toner={{Product: tonerName}} cream={{Product: creamName}}></Recs>
             
         
         </main>

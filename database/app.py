@@ -76,7 +76,7 @@ def recommendation(answers, df):
     tfidf_vectorizer = TfidfVectorizer()
     tfidf_matrix = tfidf_vectorizer.fit_transform(df["Features"])
 
-    user_vector = tfidf_vectorizer.transform(" ".join(answers))
+    user_vector = tfidf_vectorizer.transform(answers)
 
     similarities = cosine_similarity(user_vector, tfidf_matrix)
     
@@ -141,6 +141,8 @@ def get_recommendations():
         
         include, exclude = add_filters(skin_type, weather, skin_goals, sensitivity, acne, uv, paraben, allergies)
 
+        print("include:", include)
+        print("exclude:", exclude)
         recs = filter_dfs(include=include, exclude=exclude, skin_goals=skin_goals)
         print(recs)
 

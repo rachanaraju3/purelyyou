@@ -1,47 +1,63 @@
+import { set } from 'mongoose';
 import styles from './recs.module.css';
 import { IRecommendation } from '@/database/recommendation';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 
 // {cleanserName,cleanserFeat},{tonerName,tonerFeat},{creamName, creamFeat}
 
 export default function Recs( props ){
 
-    const cleanser = props.cleanser;
-    const toner = props.toner;
-    const cream = props.cream;
+    console.log("PROPS", props)
+    const [cleanserName, setCleanserName] = useState(props.cleanser.Product);
+    const [tonerName,setTonerName] = useState(props.toner.Product);
+    const [creamName,setCreamName] = useState(props.cream.Product);
 
-    let cleanserName;
-    let cleanserFeatures;
     
-    let tonerName;
-    let tonerFeatures;
 
-    let creamName;
-    let creamFeatures;
-
-    if (!cleanser){
-        cleanserName = "Unable to find a cleanser";
-        cleanserFeatures = [];
-    } else{
-        cleanserName = cleanser.Product;
-        cleanserFeatures = cleanser.Features;
+    const changeValues = () => {
+        const cleanser = props.cleanser;
+        const toner = props.toner;
+        const cream = props.cream;
+        if (!cleanser){
+            setCleanserName("Unable to find a cleanser");
+            // cleanserFeatures = [];
+        } else{
+            setCleanserName(cleanser.Product);
+            // cleanserFeatures = cleanser.Features;
+        }
+    
+        if (!toner){
+            setTonerName("Unable to find a toner or serum");
+            // tonerFeatures = [];
+        } else{
+            setTonerName(toner.Product);
+            // tonerFeatures = toner.Features;
+        }
+    
+        if (!cream){
+            setCreamName("Unable to find a cream");
+            // creamFeatures = [];
+        } else{
+            setCreamName(cream.Product);
+            // creamFeatures = cream.Features;
+        }
     }
 
-    if (!toner){
-        tonerName = "Unable to find a toner or serum";
-        tonerFeatures = [];
-    } else{
-        tonerName = toner.Product;
-        tonerFeatures = toner.Features;
-    }
+    useEffect(() => {
+        changeValues()
+    }, [props])
+    // let cleanserName;
+    // let cleanserFeatures;
+    
+    // let tonerName;
+    // let tonerFeatures;
 
-    if (!cream){
-        creamName = "Unable to find a cream";
-        creamFeatures = [];
-    } else{
-        creamName = cream.Product;
-        creamFeatures = cream.Features;
-    }
+    // let creamName;
+    // let creamFeatures;
+
+    
 
     return (
         <div className={styles.mains}>
@@ -51,21 +67,21 @@ export default function Recs( props ){
                 <div className={styles.tops}>
                     <h3>Top Cleanser: </h3>
                     <div className={styles.recName}>{cleanserName}</div>
-                    <h4>Features:</h4>
-                    <div className={styles.recText}>{cleanserFeatures}</div>
+                    {/* <h4>Features:</h4>
+                    <div className={styles.recText}>{cleanserFeatures}</div> */}
                 </div>
                 <div className={styles.tops}>
                     <h3>Top Serum and Toner:</h3>
                     <div className={styles.recName}>{tonerName}</div>
-                    <h4>Features:</h4>
-                    <div className={styles.recText}>{tonerFeatures}</div>
+                    {/* <h4>Features:</h4>
+                    <div className={styles.recText}>{tonerFeatures}</div> */}
 
                 </div>
                 <div className={styles.tops}>
                     <h3>Top Moisturizer:</h3>
                     <div className={styles.recName}>{creamName}</div>
-                    <h4>Features:</h4>
-                    <div className={styles.recText}>{creamFeatures}</div>
+                    {/* <h4>Features:</h4>
+                    <div className={styles.recText}>{creamFeatures}</div> */}
                 </div>
             </div>
         </div>
