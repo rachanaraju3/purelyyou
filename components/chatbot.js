@@ -1,7 +1,9 @@
 // require('dotenv').config({path:"./.env"});
+"use client"
 import { Box, Stack, TextField, Button, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import styles from './chatbot.module.css'
+
 
 
 
@@ -28,7 +30,7 @@ export default function Chatbot() {
     9. If a user's query falls outside what you can respond, apologize for the inconvenience and that you cannot answer that question. If they ask about makeup, let them know our site does not handle makeup products.
     10. Our recommendations should not be taken as professional advice. We simply narrow down to potential products that may be beneficial to the user. Remind users to ultimately consult their doctors.
     11. Always maintain user privacy and do not share personal information.
-    12. If you're unsure about any information, it's okay to say you don't know and offer to connect the user with a human representative.
+    12. If you're unsure about any information, it's okay to say you don't know.
     13. Keep your answers as concise as possible. Aim for 1-2 sentences.
 
     Your goal is to provide accurate information, assist with common inquiries, and ensure a positive experience for all users.`
@@ -71,8 +73,8 @@ export default function Chatbot() {
 
   return(
     <div className={styles.chatbot}>
-        <Box  width='39.5vw' height='100%' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
-    <Typography variant='h5' width='50%' display='flex' justifyContent='center' alignItems='center' bgcolor={'#E0BFB8'} border={'1px solid black'} padding={0.5} color='#E30B5C'>Welcome to the PurelyYou Support Center</Typography>
+        <Box  width='38vw' height='100%' display='flex' flexDirection='column' justifyContent='center' alignItems='center'>
+    <Typography variant='h5' width='50%' display='flex' justifyContent='center' alignItems='center' bgcolor={"#637788"} border={'px solid black'} padding={0.5} color={'white'}>Welcome to the PurelyYou Support Center</Typography>
     <Stack direction='column' width='50%' height='40vh' border='1px solid black' bgcolor='white' padding={2} spacing={3}>
       <Stack direction='column' spacing={2} flexGrow={1} overflow='auto' maxHeight='100%'>
         {messages.map((message, index)=>(

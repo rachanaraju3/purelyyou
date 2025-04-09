@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 CORS(app)
 
-full_df = pd.read_csv('skincare_products.csv')
+full_df = pd.read_csv('purelyyou/database/skincare_products.csv')
 
 categories = ["cleansers", "toners", "serums", "moisturizers"]
 
@@ -125,9 +125,7 @@ def filter_dfs(include, exclude, skin_goals):
 
 @app.route('/get_recommendations', methods=['POST'])
 def get_recommendations():
-    print("hello")
     if request.method == 'POST':
-        print("hi")
         data = request.json  # Receive JSON data from React
         print(data)
         skin_type = data.get('skinType')

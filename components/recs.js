@@ -3,6 +3,7 @@ import styles from './recs.module.css';
 import { IRecommendation } from '@/database/recommendation';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import Chatbot from './chatbot';
 
 
 // {cleanserName,cleanserFeat},{tonerName,tonerFeat},{creamName, creamFeat}
@@ -83,6 +84,7 @@ export default function Recs( props ){
                     {/* <h4>Features:</h4>
                     <div className={styles.recText}>{creamFeatures}</div> */}
                 </div>
+                <Chatbot />
             </div>
         </div>
     )

@@ -1,9 +1,11 @@
+"use client"
 import React, { useEffect } from 'react';
 import styles from './quiz.module.css';
 import { Button, FormLabel, FormControl, FormControlLabel, RadioGroup, Radio, Checkbox } from '@mui/material';
-import Recs from './recs';
+import Recs from '../../components/recs';
 import { useState } from 'react';
 import { Form, Routes, useHistory, useNavigate } from 'react-router-dom';
+import Chatbot from '@/components/chatbot';
 
 export default function Quiz(){
     
@@ -121,6 +123,7 @@ export default function Quiz(){
 
     return(
         <main className={styles.mains}>
+            {/* <Chatbot className={styles.chatbot}/> */}
             <div>
                 <header>
                     <h2>Find Personalized Products</h2>
@@ -211,7 +214,6 @@ export default function Quiz(){
                 </div>
             </div>
             <Recs className={styles.rec} cleanser={{Product: cleanserName}} toner={{Product: tonerName}} cream={{Product: creamName}}></Recs>
-            
         
         </main>
     )

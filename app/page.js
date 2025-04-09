@@ -1,9 +1,10 @@
 "use client"
 import Image from "next/image";
 import styles from "./page.module.css";
-import Quiz from "@/components/quiz";
+import Quiz from "@/app/quiz/page";
 import Recs from "@/components/recs";
 import Chatbot from "@/components/chatbot";
+import Homepage from "./homepage/page";
 import {
   BrowserRouter as Router,
   Routes,
@@ -13,17 +14,21 @@ import {
 
 export default function Home() {
   return (
-    <div>
-      {/* <Router>
-        <Routes>
-          <Route path="/recs" element={<Recs className={styles.rec} cleanser={{Product: "HI", Features: ["dkflajfla"]}} toner={{Product: "YO", Features: ["dkflajfla, water based"]}} cream={{Product: "SUP", Features: ["moisturizing"]}}></Recs>}/>
-        </Routes>
-      </Router> */}
-      <main className={styles.main}>
-      <Quiz></Quiz>
-      <Chatbot className={styles.chatbot}></Chatbot>
-    </main>
-    </div>
+      <div>
+        <Homepage/>
+      </div>
+    // <div>
+    //   {/* <Router>
+    //     <Routes>
+    //       <Route path="/recs" element={<Recs className={styles.rec} cleanser={{Product: "HI", Features: ["dkflajfla"]}} toner={{Product: "YO", Features: ["dkflajfla, water based"]}} cream={{Product: "SUP", Features: ["moisturizing"]}}></Recs>}/>
+    //     </Routes>
+    //   </Router> */}
+    //   <main className={styles.main}>
+    //     <Homepage></Homepage>
+    //     <Quiz></Quiz>
+    //   {/* <Chatbot className={styles.chatbot}></Chatbot> */}
+    // </main>
+    // </div>
     
     
     // <main className={styles.main}>
